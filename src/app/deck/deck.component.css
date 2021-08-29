@@ -28,6 +28,7 @@
     border-radius: 5px;
     background: rgba(255, 255, 255, 0.2);
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     padding: 10px 0 10px 0;
@@ -58,6 +59,10 @@
     }
     .deck-container {
         width: 100vw;
+    }
+    .deck-controls {
+        margin-top: 10px;
+        height: 10vh;
     }
 }
 
