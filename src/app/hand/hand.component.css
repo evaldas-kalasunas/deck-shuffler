@@ -1,0 +1,39 @@
+.hand-side {
+    flex: 1;
+    height: 90vh;
+    width: 50vw;
+    background: linear-gradient(-45deg, #edd5bf 0,#a7d5f6 68%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.hand-container {
+    width: 80%;
+    height: 70vh;
+    border-radius: 5px;
+    margin: 10px;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+}
+
+.hand-controls {
+    width: 80%;
+    height: 4vh;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0 10px 0;
+}
+
+@media screen and (max-width:990px) {
+    .hand-side {
+        width: 100vw;
+    }
+}

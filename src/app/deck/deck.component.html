@@ -1,0 +1,13 @@
+<div class="deck-side">
+        <div class="deck-controls">
+                <button class="deck-shuffler-btn" (click)="handleShuffle($event)"> SHUFFLE </button>
+                <button class="deck-shuffler-btn" (click)=handleHideUnhide($event)> {{hidden ? 'UNHIDE' : 'HIDE'}} </button>
+                <button class="deck-shuffler-btn" (click)="handleReset($event)"> RESET </button>
+            </div>
+    <div class="deck-container">
+        
+        <div class="deck-generator" #dc>
+            <!-- Decks are generated here -->
+        </div>
+    </div>
+</div>

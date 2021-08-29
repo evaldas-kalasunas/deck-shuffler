@@ -1,0 +1,16 @@
+.header {
+    width: 100vw;
+    height: 10vh;
+    /* background-color: #8dcfe9; */
+    background: linear-gradient(180deg, #8dcfe9 0,#bfdced 58%);
+    display: flex;
+    justify-content: center;
+}
+
+.title {
+    margin: 0 auto;
+    padding: 20px;
+    color: #FFF;
+    font-weight: bold;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}

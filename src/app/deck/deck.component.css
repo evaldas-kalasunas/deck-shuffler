@@ -1,0 +1,60 @@
+/* Flex madness ;) */
+
+.deck-side {
+    flex: 1;
+    min-height: 90vh;
+    width: 50vw;
+    background: linear-gradient(45deg, #cab7f8 0,#a3e6e2 68%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.deck-container {
+    width: 80%;
+    height: 70vh;
+    border-radius: 5px;
+    margin: 10px;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+}
+.deck-controls {
+    width: 80%;
+    height: 4vh;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0 10px 0;
+}
+
+.deck-generator {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.hidden-card {
+    background: rgb(219, 219, 219);
+    color: rgb(219, 219, 219);
+}
+
+@media screen and (max-width:990px) {
+    .deck-side {
+        width: 100vw;
+    }
+}
+
+@media screen and (max-width:500px) {
+    .deck-container {
+        width: 100vw;
+    }
+}
+
+  

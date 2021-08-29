@@ -1,1 +1,56 @@
 /* You can add global styles to this file, and also import other style files */
+html, body { 
+    margin: 0px;
+    padding: 0px;
+    font-size:100%;
+}
+
+.container {
+    display: flex;
+}
+
+.deck-shuffler-btn {
+    background: rgba(69, 155, 224, 0.712);
+    color: #FFF;
+    font-weight: bold;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 5px;
+    border: none;
+    outline: none;
+}
+
+.deck-shuffler-btn:hover {
+    cursor: pointer;
+}
+
+/* Common card style */
+.card-base-r {
+    flex: 0 0 auto;
+    height: 60px;
+    width: 40px;
+    background: #FFF;
+    border-radius: 5px;
+    color: #F00;
+    margin: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.card-base-b {
+    flex: 0 0 auto;
+    height: 60px;
+    width: 40px;
+    background: #FFF;
+    border-radius: 5px;
+    color: #000;
+    margin: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media screen and (max-width:990px) {
+    .container { flex-wrap: wrap;  }
+    .hand-container { flex-basis: 100%; }
+  }
