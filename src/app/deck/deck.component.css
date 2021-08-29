@@ -48,10 +48,14 @@
 @media screen and (max-width:990px) {
     .deck-side {
         width: 100vw;
+        min-height: 80vh;
     }
 }
 
 @media screen and (max-width:500px) {
+    .deck-side {
+        min-height: 80vh;
+    }
     .deck-container {
         width: 100vw;
     }

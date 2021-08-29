@@ -20,6 +20,7 @@ export class HandComponent implements OnInit {
   }
 
   handleDraw(event) {
+    this.drawnCards = [];
     this.clearHand();
     this.localDeck = this.deckOpsService.getDeck();
 
@@ -39,6 +40,7 @@ export class HandComponent implements OnInit {
   }
 
   handleClear(event) {
+    this.drawnCards = [];
     this.clearHand();
   }
 
@@ -126,7 +128,6 @@ export class HandComponent implements OnInit {
   }
 
   clearHand() {
-    this.drawnCards = [];
     const childElements = this.hc.nativeElement.children;
     // removes HTMLCollection childElements
     while (childElements.length > 0) {
