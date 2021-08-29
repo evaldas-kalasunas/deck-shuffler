@@ -5,6 +5,6 @@
         <button class="deck-shuffler-btn" (click)=handleClear($event)> CLEAR </button>
     </div>
     <div class="hand-container" #hc>
-
+        {{showMessage ? 'Please draw cards first!' : null}}
     </div>
 </div>

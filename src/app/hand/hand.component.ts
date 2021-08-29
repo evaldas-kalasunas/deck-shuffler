@@ -9,17 +9,20 @@ import { DeckOpsHandlerService } from './../deck-ops-handler.service';
 export class HandComponent implements OnInit {
   public localDeck: Array<string>
   public drawnCards: Array<string>
+  public showMessage: Boolean
 
   @ViewChild('hc',  {static: false}) hc:ElementRef;
 
   constructor(private renderer: Renderer2,private deckOpsService: DeckOpsHandlerService) {
     this.drawnCards = [];
+    this.showMessage = false;
    }
 
   ngOnInit() {   
   }
 
   handleDraw(event) {
+    this.showMessage = false;
     this.drawnCards = [];
     this.clearHand();
     this.localDeck = this.deckOpsService.getDeck();
@@ -28,8 +31,9 @@ export class HandComponent implements OnInit {
     let result = new Array(n),
       len = this.localDeck.length,
       taken = new Array(len);
-      if (n > len)
+      if (n > len) {
         throw new RangeError("More elements taken than available");
+      }
       while(n--) {
         const x = Math.floor(Math.random() * len);
         result[n] = this.localDeck[x in taken ? taken[x] : x];
@@ -40,13 +44,16 @@ export class HandComponent implements OnInit {
   }
 
   handleClear(event) {
+    this.showMessage = false;
     this.drawnCards = [];
     this.clearHand();
   }
 
   handleSort(event) {
     if (this.drawnCards.length === 0) {
-      throw new Error('No cards selected. Please draw cards firsr!');
+      this.showMessage = true;
+    } else {
+      this.showMessage = false;
     }
     let mappedCards = this.drawnCards.map(card => {
       return {
