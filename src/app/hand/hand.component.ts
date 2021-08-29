@@ -126,6 +126,7 @@ export class HandComponent implements OnInit {
   }
 
   clearHand() {
+    this.drawnCards = [];
     const childElements = this.hc.nativeElement.children;
     // removes HTMLCollection childElements
     while (childElements.length > 0) {
