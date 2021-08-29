@@ -33,10 +33,19 @@ html, body {
     border-radius: 5px;
     color: #F00;
     margin: 0.5rem;
+    padding: 0.04rem;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
+    flex-direction: column;
 }
+.card-base-r > div:first-of-type {
+    margin-right: auto;
+}
+.card-base-r > div:last-of-type {
+    margin-left: auto;
+}
+
 .card-base-b {
     flex: 0 0 auto;
     height: 60px;
@@ -45,9 +54,17 @@ html, body {
     border-radius: 5px;
     color: #000;
     margin: 0.5rem;
+    padding: 0.04rem;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
+    flex-direction: column;
+}
+.card-base-b > div:first-of-type {
+    margin-right: auto;
+}
+.card-base-b > div:last-of-type {
+    margin-left: auto;
 }
 
 @media screen and (max-width:990px) {
@@ -67,6 +84,7 @@ html, body {
         display: flex;
         justify-content: center;
         align-items: center;
+        flex-direction: column;
     }
     .card-base-b {
         flex: 0 0 auto;
@@ -79,5 +97,6 @@ html, body {
         display: flex;
         justify-content: center;
         align-items: center;
+        flex-direction: column;
     }
 }

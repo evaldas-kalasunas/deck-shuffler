@@ -123,8 +123,18 @@ export class HandComponent implements OnInit {
 
   generateCard(card) {
     const cardDiv = this.renderer.createElement('div');
+    const topDiv = this.renderer.createElement('div');
+    const topDivSymbol = this.renderer.createText(`${card.split('')[0]}`);
+    this.renderer.appendChild(topDiv, topDivSymbol);
+    const middleDiv = this.renderer.createElement('div');
     const text = this.renderer.createText(`${card}`);
-    this.renderer.appendChild(cardDiv, text);
+    const bottomDiv = this.renderer.createElement('div');
+    const bottomDivSymbol =  this.renderer.createText(`${card.split('')[1]}`);
+    this.renderer.appendChild(middleDiv, text);
+    this.renderer.appendChild(bottomDiv, bottomDivSymbol);
+    this.renderer.appendChild(cardDiv, topDiv);
+    this.renderer.appendChild(cardDiv, middleDiv)
+    this.renderer.appendChild(cardDiv, bottomDiv);
     if (card.includes('H') || card.includes('D')) {
       this.renderer.addClass(cardDiv, `card-base-r`)
     } else {
