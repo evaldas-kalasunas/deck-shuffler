@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, Renderer2 } from '@angular/core';
 import { DeckOpsHandlerService } from './../deck-ops-handler.service';
+import { IcardInterface } from './../IDeckShufflerInterface';
 
 @Component({
   selector: 'app-deck',
@@ -8,11 +9,11 @@ import { DeckOpsHandlerService } from './../deck-ops-handler.service';
 })
 
 export class DeckComponent implements OnInit, AfterViewInit {
-  public deck: Array<string>;
+  public deckObj: Array<IcardInterface>;
   public hidden: Boolean;
   
   constructor(private renderer: Renderer2, private deckOpsService: DeckOpsHandlerService) { 
-    this.deck = [];
+    this.deckObj = [];
     this.hidden = false;
    }
 
@@ -20,26 +21,12 @@ export class DeckComponent implements OnInit, AfterViewInit {
   ngOnInit() {}
 
   ngAfterViewInit() {
-    this.createDeck(); 
-    this.deckOpsService.setDeck(this.deck); 
-    this.generateCards(this.deck);
-  }
-
-  createDeck() {
-    const suits = ['S', 'C', 'D', 'H'];
-    const cards = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A'];
-
-    for (let i = 0 ; i < suits.length; i++) {
-      for  (let j = 0; j < cards.length; j++ ) {
-        this.deck.push(`${suits[i]}${cards[j]}`)
-      }
-    }
-    
-    return this.deck;
+    this.deckObj = this.deckOpsService.buildDeck(); 
+    this.deckOpsService.setDeck(this.deckObj); 
+    this.generateCards(this.deckObj);
   }
 
   clearDeck() {
-    this.deck = [];
     const childElements = this.dc.nativeElement.children;
     // removes HTMLCollection childElements
     while (childElements.length > 0) {
@@ -55,24 +42,7 @@ export class DeckComponent implements OnInit, AfterViewInit {
   }
 
   generateCard(card) {
-    const cardDiv = this.renderer.createElement('div');
-    const topDiv = this.renderer.createElement('div');
-    const topDivSymbol = this.renderer.createText(`${card.split('')[0]}`);
-    this.renderer.appendChild(topDiv, topDivSymbol);
-    const middleDiv = this.renderer.createElement('div');
-    const text = this.renderer.createText(`${card}`);
-    const bottomDiv = this.renderer.createElement('div');
-    const bottomDivSymbol =  this.renderer.createText(`${card.split('')[1]}`);
-    this.renderer.appendChild(middleDiv, text);
-    this.renderer.appendChild(bottomDiv, bottomDivSymbol);
-    this.renderer.appendChild(cardDiv, topDiv);
-    this.renderer.appendChild(cardDiv, middleDiv)
-    this.renderer.appendChild(cardDiv, bottomDiv);
-    if (card.includes('H') || card.includes('D')) {
-      this.renderer.addClass(cardDiv, `card-base-r`)
-    } else {
-      this.renderer.addClass(cardDiv, `card-base-b`)
-    }
+    const cardDiv = this.deckOpsService.buildCard(card, this.renderer)
 
     if (this.hidden) {
       this.renderer.addClass(cardDiv, `hidden-card`) 
@@ -87,27 +57,27 @@ export class DeckComponent implements OnInit, AfterViewInit {
   /* Randomize array in-place using Durstenfeld shuffle algorithm */
   handleShuffle(event) {
     this.clearDeck();
-    this.createDeck();
-    for (var i = this.deck.length - 1; i > 0; i--) {
+    for (var i = this.deckObj.length - 1; i > 0; i--) {
         var j = Math.floor(Math.random() * (i + 1));
-        var temp = this.deck[i];
-        this.deck[i] = this.deck[j];
-        this.deck[j] = temp;
+        var temp = this.deckObj[i];
+        this.deckObj[i] = this.deckObj[j];
+        this.deckObj[j] = temp;
     }
-    this.deckOpsService.setDeck(this.deck);
+    this.deckOpsService.setDeck(this.deckObj);
+
     // above algorithm using es6
     // for (let i = array.length - 1; i > 0; i--) {
     //         const j = Math.floor(Math.random() * (i + 1));
     //         [array[i], array[j]] = [array[j], array[i]];
     //     }
-    this.generateCards(this.deck);
+    this.generateCards(this.deckObj);
   }
 
   handleReset(event) {
     this.clearDeck();
-    this.createDeck();
-    this.deckOpsService.setDeck(this.deck);
-    this.generateCards(this.deck);
+    this.deckObj = this.deckOpsService.buildDeck();
+    this.deckOpsService.setDeck(this.deckObj);
+    this.generateCards(this.deckObj);
   }
 
   handleHideUnhide(event) {

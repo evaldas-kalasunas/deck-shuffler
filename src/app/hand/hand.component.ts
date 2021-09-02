@@ -1,14 +1,16 @@
 import { Component, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import { DeckOpsHandlerService } from './../deck-ops-handler.service';
+import { IcardInterface } from '../IDeckShufflerInterface';
 
 @Component({
   selector: 'app-hand',
   templateUrl: './hand.component.html',
   styleUrls: ['./hand.component.css']
 })
+
 export class HandComponent implements OnInit {
-  public localDeck: Array<string>
-  public drawnCards: Array<string>
+  public localDeck: Array<IcardInterface>
+  public drawnCards: Array<IcardInterface>
   public showMessage: Boolean
 
   @ViewChild('hc',  {static: false}) hc:ElementRef;
@@ -21,7 +23,7 @@ export class HandComponent implements OnInit {
   ngOnInit() {   
   }
 
-  handleDraw(event) {
+  handleDrawRandom(event) {
     this.showMessage = false;
     this.drawnCards = [];
     this.clearHand();
@@ -43,6 +45,10 @@ export class HandComponent implements OnInit {
       this.generateCards(result);
   }
 
+  handleDrawSelected(event) {
+    
+  }
+
   handleClear(event) {
     this.showMessage = false;
     this.drawnCards = [];
@@ -50,69 +56,28 @@ export class HandComponent implements OnInit {
   }
 
   handleSort(event) {
+    let sortedHand = [];
+    let sortedRed = [];
+    let sortedBlack = [];
     if (this.drawnCards.length === 0) {
       this.showMessage = true;
     } else {
       this.showMessage = false;
     }
-    let mappedCards = this.drawnCards.map(card => {
-      return {
-        value: this.getCardValue(card),
-        color: this.getCardColor(card),
-        stringValue: card,
+
+    for (let i = 0; i < this.drawnCards.length; i++) {
+      if (this.drawnCards[i].color === 'red') {
+        sortedRed.unshift(this.drawnCards[i]);
+      } else {
+        sortedBlack.push(this.drawnCards[i]);
       }
-    })
-    
-    this.drawnCards = mappedCards.sort((a,b) => {
-      return a.value - b.value;
-    }).map(card => card.stringValue);
-   
+    }
+
+    sortedRed = sortedRed.sort((a,b) => a.value > b.value ? 1 : -1);
+    sortedBlack =  sortedBlack.sort((a,b) => a.value > b.value ? 1 : -1);
+    sortedHand = sortedRed.concat(sortedBlack)
     this.clearHand();
-    this.generateCards(this.drawnCards);
-  }
-
-  getCardValue(localCard) {
-    const splitted = localCard.split('')[1];
-    switch(splitted) {
-      case '2':
-        return 2;
-      case '3':
-        return 3;
-      case '4':
-        return 4;
-      case '5':
-        return 5;
-      case '6':
-        return 6;
-      case '7':
-        return 7;
-      case '8':
-        return 8;
-      case '9':
-        return 9;
-      case 'T':
-        return 10;
-      case 'J':
-        return 11;
-      case 'Q':
-        return 12;
-      case 'K':
-        return 13;
-      case 'A':
-        return 14;
-    }
-  }
-
-  getCardColor(localCard) {
-    const splitted = localCard.split('')[0];
-    switch(splitted) {
-      case 'H':
-      case 'D':
-        return 'R';
-      case 'S':
-      case 'C':
-        return 'B';
-    }
+    this.generateCards(sortedHand);
   }
 
   generateCards(hand) {
@@ -122,24 +87,7 @@ export class HandComponent implements OnInit {
   }
 
   generateCard(card) {
-    const cardDiv = this.renderer.createElement('div');
-    const topDiv = this.renderer.createElement('div');
-    const topDivSymbol = this.renderer.createText(`${card.split('')[0]}`);
-    this.renderer.appendChild(topDiv, topDivSymbol);
-    const middleDiv = this.renderer.createElement('div');
-    const text = this.renderer.createText(`${card}`);
-    const bottomDiv = this.renderer.createElement('div');
-    const bottomDivSymbol =  this.renderer.createText(`${card.split('')[1]}`);
-    this.renderer.appendChild(middleDiv, text);
-    this.renderer.appendChild(bottomDiv, bottomDivSymbol);
-    this.renderer.appendChild(cardDiv, topDiv);
-    this.renderer.appendChild(cardDiv, middleDiv)
-    this.renderer.appendChild(cardDiv, bottomDiv);
-    if (card.includes('H') || card.includes('D')) {
-      this.renderer.addClass(cardDiv, `card-base-r`)
-    } else {
-      this.renderer.addClass(cardDiv, `card-base-b`)
-    }
+    const cardDiv = this.deckOpsService.buildCard(card, this.renderer)
 
     this.renderer.appendChild(this.hc.nativeElement, cardDiv);
   }
