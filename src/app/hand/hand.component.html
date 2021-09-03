@@ -1,10 +1,26 @@
 <div class="hand-side">
     <div class="hand-controls">
-        <button class="deck-shuffler-btn" (click)="handleDraw($event)"> DRAW RANDOM 5 </button>
+        <div class="form-controls" [formGroup]="cardForm">
+            <label>Select Cards:</label>
+            <input 
+                type="number"
+                max="52"
+                min="0"
+                step="1"
+                formControlName="numberOfCards"
+                id="selectedCards"
+                name="selectedCards"
+                onKeyDown="return false"
+            />
+        </div>
+        <button class="deck-shuffler-btn" (click)="handleDrawSelected($event)"> DRAW SELECTED CARDS </button>
+        <button class="deck-shuffler-btn" (click)="handleDrawRandom($event)"> DRAW RANDOM 5 </button>
         <button class="deck-shuffler-btn" (click)=handleSort($event)> SORT </button>
         <button class="deck-shuffler-btn" (click)=handleClear($event)> CLEAR </button>
     </div>
     <div class="hand-container" #hc>
         {{showMessage ? 'Please draw cards first!' : null}}
+        {{showSelectedMessage ? 'No cards selected! Either select some or draw random 5.' : null}}
+        {{showNoCardsMessage ? 'No 5 cards left to draw, please reset deck or draw by selection!' : null}}
     </div>
 </div>

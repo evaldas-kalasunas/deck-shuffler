@@ -16,13 +16,14 @@
     margin: 10px;
     background: rgba(255, 255, 255, 0.2);
     display: flex;
-    justify-content: center;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
     align-items: center;
 }
 
 .hand-controls {
     width: 80%;
-    height: 4vh;
+    height: auto;
     border-radius: 5px;
     background: rgba(255, 255, 255, 0.2);
     display: flex;
@@ -30,6 +31,16 @@
     justify-content: center;
     align-items: center;
     padding: 10px 0 10px 0;
+}
+
+.form-controls {
+    width: calc(100%/2);
+    flex-grow:0;
+}
+
+.form-controls input{
+    width: 50%;
+    flex-grow:0;
 }
 
 @media screen and (max-width:990px) {

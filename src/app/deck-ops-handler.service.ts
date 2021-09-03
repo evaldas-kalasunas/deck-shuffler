@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IcardInterface } from './IDeckShufflerInterface';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -7,10 +8,16 @@ import { IcardInterface } from './IDeckShufflerInterface';
 export class DeckOpsHandlerService {
   public deck: Array<string>
   public deckObj: Array<IcardInterface>
+  public selectedCards: Array<IcardInterface>
+
+  public selectedCardsSubject = new Subject<IcardInterface[]>();
+  public deckSubject = new Subject<IcardInterface[]>();
+  public resetHandSubject = new Subject<Boolean>();
 
   constructor() {
     this.deck = [];
     this.deckObj = [];
+    this.selectedCards = [];
    }
 
    getDeck(): Array<IcardInterface> {
@@ -18,7 +25,14 @@ export class DeckOpsHandlerService {
    }
 
    setDeck(deck): void {
-    this.deck = deck;
+     return this.deckSubject.next(deck)
+   }
+
+   setSelectedCards(selectedCards) {
+    return this.selectedCardsSubject.next(selectedCards);
+   }
+   resetHand(shouldResetHand) {
+    return this.resetHandSubject.next(shouldResetHand);
    }
 
    buildDeck(): Array<IcardInterface> {

@@ -6,6 +6,9 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { DeckComponent } from './deck/deck.component';
 import { HandComponent } from './hand/hand.component';
+import { ReactiveFormsModule, FormsModule  } from '@angular/forms';
+import { DeckOpsHandlerService } from './deck-ops-handler.service';
+
 
 @NgModule({
   declarations: [
@@ -16,9 +19,11 @@ import { HandComponent } from './hand/hand.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule,
+    FormsModule 
   ],
-  providers: [],
+  providers: [DeckOpsHandlerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

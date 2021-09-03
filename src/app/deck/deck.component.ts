@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, Renderer2 } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, Renderer2} from '@angular/core';
 import { DeckOpsHandlerService } from './../deck-ops-handler.service';
 import { IcardInterface } from './../IDeckShufflerInterface';
 
@@ -15,14 +15,31 @@ export class DeckComponent implements OnInit, AfterViewInit {
   constructor(private renderer: Renderer2, private deckOpsService: DeckOpsHandlerService) { 
     this.deckObj = [];
     this.hidden = false;
+
+    this.deckOpsService.selectedCardsSubject.subscribe(selectedCards => {
+      this.deckObj = this.deckObj
+        .filter(({ stringValue: id1, displayValue: key1 }) => !selectedCards
+          .some(({ stringValue: id2, displayValue: key2 }) =>  id2 === id1 && key1 === key2));
+      this.clearDeck();
+      this.deckOpsService.setDeck(this.deckObj);
+      this.generateCards(this.deckObj);
+
+      if (selectedCards.length === 0) {
+        this.clearDeck();
+        this.deckObj = this.deckOpsService.buildDeck(); 
+        this.deckOpsService.setDeck(this.deckObj);
+        this.generateCards(this.deckObj);
+      }
+    })
    }
 
   @ViewChild('dc',  {static: false}) dc:ElementRef;
+
   ngOnInit() {}
 
   ngAfterViewInit() {
     this.deckObj = this.deckOpsService.buildDeck(); 
-    this.deckOpsService.setDeck(this.deckObj); 
+    this.deckOpsService.setDeck(this.deckObj);
     this.generateCards(this.deckObj);
   }
 
@@ -77,6 +94,7 @@ export class DeckComponent implements OnInit, AfterViewInit {
     this.clearDeck();
     this.deckObj = this.deckOpsService.buildDeck();
     this.deckOpsService.setDeck(this.deckObj);
+    this.deckOpsService.resetHand(true); // to clear hand
     this.generateCards(this.deckObj);
   }
 
