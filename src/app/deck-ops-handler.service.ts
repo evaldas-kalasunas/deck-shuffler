@@ -46,7 +46,7 @@ export class DeckOpsHandlerService {
       { displayValue: '6', value: 6},
       { displayValue: '7', value: 7},
       { displayValue: '8', value: 8},
-      { displayValue: '8', value: 8},
+      { displayValue: '9', value: 9},
       { displayValue: 'T', value: 10},
       { displayValue: 'J', value: 11},
       { displayValue: 'Q', value: 12},
