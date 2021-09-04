@@ -94,8 +94,10 @@ export class HandComponent implements OnInit {
 
   handleSort(event) {
     let sortedHand = [];
-    let sortedRed = [];
-    let sortedBlack = [];
+    let sortedHearts = [];
+    let sortedDiamonds = [];
+    let sortedClubs = [];
+    let sortedSpades = [];
     if (this.drawnCards.length === 0) {
       this.showMessage = true;
     } else {
@@ -103,16 +105,22 @@ export class HandComponent implements OnInit {
     }
 
     for (let i = 0; i < this.drawnCards.length; i++) {
-      if (this.drawnCards[i].color === 'red') {
-        sortedRed.unshift(this.drawnCards[i]);
+      if (this.drawnCards[i].suit === 'H') {
+        sortedHearts.unshift(this.drawnCards[i]);
+      } else if  (this.drawnCards[i].suit === 'D') {
+        sortedDiamonds.unshift(this.drawnCards[i]);
+      } else if  (this.drawnCards[i].suit === 'C') {
+        sortedClubs.unshift(this.drawnCards[i]);
       } else {
-        sortedBlack.push(this.drawnCards[i]);
+        sortedSpades.push(this.drawnCards[i]);
       }
     }
 
-    sortedRed = sortedRed.sort((a,b) => a.value > b.value ? 1 : -1);
-    sortedBlack =  sortedBlack.sort((a,b) => a.value > b.value ? 1 : -1);
-    sortedHand = sortedRed.concat(sortedBlack)
+    sortedHearts = sortedHearts.sort((a,b) => a.value > b.value ? 1 : -1);
+    sortedDiamonds = sortedDiamonds.sort((a,b) => a.value > b.value ? 1 : -1);
+    sortedClubs = sortedClubs.sort((a,b) => a.value > b.value ? 1 : -1);
+    sortedSpades = sortedSpades.sort((a,b) => a.value > b.value ? 1 : -1);
+    sortedHand = sortedHearts.concat(sortedDiamonds, sortedClubs, sortedSpades)
     this.clearHand();
     this.generateCards(sortedHand);
   }
